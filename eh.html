@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Folder System</title>
+  <style>
+    /* Add your styles here */
+    .folder {
+      cursor: pointer;
+      margin: 5px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div id="folders-container">
+    <!-- Folders will be dynamically added here -->
+  </div>
+  <div id="folder-content">
+    <!-- Folder contents will be dynamically loaded here -->
+  </div>
+  <button onclick="navigateBack()">Back</button>
+
+  <script>
+    // Sample data structure representing nested folders
+    const folderData = {
+      'Folder 1': ['File 1', 'File 2'],
+      'Folder 2': ['File 3', 'File 4'],
+      'Nested Folder': {
+        'Subfolder 1': ['Subfile 1', 'Subfile 2'],
+        'Subfolder 2': ['Subfile 3']
+      }
+      // Add more folders as needed
+    };
+
+    // Stack to keep track of the current folder hierarchy
+    const folderStack = [];
+
+    // Function to render folders on the page
+    function renderFolders(container, folders) {
+      container.innerHTML = '';
+
+      for (const folderName in folders) {
+        const folderElement = document.createElement('div');
+        folderElement.className = 'folder';
+        folderElement.textContent = folderName;
+
+        // Add click event listener to load folder contents
+        folderElement.addEventListener('click', () => {
+          // Push the selected folder onto the stack
+          folderStack.push({ name: folderName, contents: folders });
+
+          // Render the contents of the selected folder
+          renderFolderContents(folders[folderName]);
+        });
+
+        container.appendChild(folderElement);
+      }
+    }
+
+    // Function to render folder contents on the page
+    function renderFolderContents(contents) {
+      const foldersContainer = document.getElementById('folders-container');
+      const folderContentContainer = document.getElementById('folder-content');
+
+      // Clear the existing folders
+      foldersContainer.innerHTML = '';
+
+      if (typeof contents === 'object' && Object.keys(contents).length > 0) {
+        // If contents is an object, it means it's a nested folder structure
+        renderFolders(foldersContainer, contents);
+      } else {
+        // Render the contents of the selected folder
+        folderContentContainer.innerHTML = '';
+        contents.forEach(content => {
+          const contentElement = document.createElement('div');
+          contentElement.textContent = content;
+          folderContentContainer.appendChild(contentElement);
+        });
+      }
+    }
+
+    // Function to navigate back to the parent folder
+    function navigateBack() {
+      // Pop the top folder from the stack
+      const poppedFolder = folderStack.pop();
+
+      if (poppedFolder) {
+        // Render the contents of the parent folder
+        renderFolderContents(poppedFolder.contents);
+      }
+    }
+
+    // Initial render
+    renderFolders(document.getElementById('folders-container'), folderData);
+  </script>
+</body>
+</html>

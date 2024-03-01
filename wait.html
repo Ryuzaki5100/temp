@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Item Form</title>
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="itemType" value="folder" onclick="showModal('folderFormModal')">
+      <label class="form-check-label">
+        New Folder
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="itemType" value="cubeConfig" onclick="showModal('cubeConfigFormModal')">
+      <label class="form-check-label">
+        New Cube Configuration
+      </label>
+    </div>
+  </div>
+
+  <!-- Folder Form Modal -->
+  <div class="modal" id="folderFormModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">New Folder</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form onsubmit="createFolder(); return false;">
+            <div class="form-group">
+              <label for="folderNameInput">Folder Name:</label>
+              <input type="text" class="form-control" id="folderNameInput" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Folder</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cube Configuration Form Modal -->
+  <div class="modal" id="cubeConfigFormModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">New Cube Configuration</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form onsubmit="createCubeConfig(); return false;">
+            <div class="form-group">
+              <label for="cubeConfigInput">Cube Configuration:</label>
+              <input type="text" class="form-control" id="cubeConfigInput" required>
+            </div>
+            <div class="form-group">
+              <label for="algorithmInput">Algorithm:</label>
+              <input type="text" class="form-control" id="algorithmInput" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Cube Configuration</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Bootstrap JS and Popper.js scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    function showModal(modalId) {
+      // Close any open modals
+      $('.modal').modal('hide');
+      // Show the selected modal
+      $('#' + modalId).modal('show');
+    }
+
+    function createFolder() {
+      const folderName = document.getElementById('folderNameInput').value;
+      console.log('Create Folder:', folderName);
+      // Add logic to handle the created folder
+      // Close the modal after handling
+      $('#folderFormModal').modal('hide');
+    }
+
+    function createCubeConfig() {
+      const cubeConfig = document.getElementById('cubeConfigInput').value;
+      const algorithm = document.getElementById('algorithmInput').value;
+      console.log('Create Cube Configuration:', cubeConfig, algorithm);
+      // Add logic to handle the created cube configuration
+      // Close the modal after handling
+      $('#cubeConfigFormModal').modal('hide');
+    }
+  </script>
+</body>
+</html>
